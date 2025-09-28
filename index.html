@@ -130,6 +130,43 @@
       font-size: 0.9em;
       color: #ccc;
     }
+    .dpmods-hyper-btn{
+  display:inline-block;
+  text-decoration:none;
+  font-weight:600;
+  font-size:0.95rem;
+  line-height:1;
+  padding:8px 14px;
+  border-radius:12px;
+  border:2px solid transparent;
+  transition:transform .08s ease, box-shadow .12s ease, opacity .08s ease;
+  vertical-align:middle;
+}
+
+/* Primary filled button */
+.dpmods-primary{
+  background: linear-gradient(135deg,#ff6b6b,#ff8a66);
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+/* Ghost / outline button */
+.dpmods-ghost{
+  background: transparent;
+  color: #333;
+  border-color: rgba(0,0,0,0.08);
+  backdrop-filter: blur(2px);
+}
+
+/* Hover & active (subtle) */
+.dpmods-hyper-btn:hover{ transform: translateY(-2px); opacity:0.98; }
+.dpmods-hyper-btn:active{ transform: translateY(0); opacity:0.92; }
+
+/* Make buttons responsive on small screens */
+@media (max-width:420px){
+  .dpmods-hyper-btn{ display:block; width:100%; text-align:center; margin-bottom:8px; }
+  .dpmods-ghost{ margin-left:0 !important; }
+}
   </style>
 </head>
 <body>
@@ -161,6 +198,27 @@
       <div class="info-box">
         <h2>Skills</h2>
         <ul>
+         <li>PHP & Python Bot Development</li>
+  <li>Web Technologies: HTML, CSS & JavaScript</li>
+  <li>Telegram Bot Creation & Automation</li>
+  <li>Web UI/UX Design</li>
+  <li>Graphic Design & Video Editing</li>
+        </ul>
+      </div>
+
+       <div class="info-box">
+        <h2>Telegram Bots & Group</h2>
+        <ul>
+           <div class="dpmods-btns" style="margin-top:12px;">
+    <!-- Primary hypertext button -->
+    <a class="dpmods-hyper-btn dpmods-primary" href="https://t.me/yourchannel" target="_blank" rel="noopener">
+      Visit Telegram Channel
+    </a>
+
+    <!-- Ghost / link-style button -->
+    <a class="dpmods-hyper-btn dpmods-ghost" href="https://t.me/yourgroup" target="_blank" rel="noopener" style="margin-left:8px;">
+      Join Group
+    </a>
          <li>PHP & Python Bot Development</li>
   <li>Web Technologies: HTML, CSS & JavaScript</li>
   <li>Telegram Bot Creation & Automation</li>
