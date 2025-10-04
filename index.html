@@ -170,57 +170,32 @@
 
     
 
-.dpx_ytWrap_324 {
-  text-align: center;
-}
-
-.dpx_btn_yt_999 {
+.ytBtn_dpx_493 {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  background: #ff0000;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(145deg, #ff0000, #cc0000);
   color: #fff;
-  padding: 12px 24px;
-  border-radius: 50px;
-  font-size: 16px;
   font-weight: 600;
+  font-size: 15px;
+  padding: 10px 26px;
+  border-radius: 40px;
   text-decoration: none;
-  box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
-  position: relative;
-  overflow: hidden;
-  transition: 0.3s ease;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.4);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.dpx_btn_yt_999::before {
-  content: "";
-  position: absolute;
-  width: 200%;
-  height: 200%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) rotate(45deg);
-  background: rgba(255, 255, 255, 0.15);
-  transition: 0.5s;
+.ytBtn_dpx_493:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 18px rgba(255, 0, 0, 0.7);
+  background: linear-gradient(145deg, #ff2020, #b00000);
 }
 
-.dpx_btn_yt_999:hover::before {
-  width: 0;
-  height: 0;
-}
-
-.dpx_btn_yt_999:hover {
-  background: #e60000;
-  box-shadow: 0 0 30px rgba(255, 0, 0, 0.8);
-  transform: scale(1.05);
-}
-
-.dpx_logo_yt_517 {
-  display: flex;
-  align-items: center;
-}
-
-.dpx_text_yt_726 {
-  letter-spacing: 0.5px;
+.ytIcon_dpx_493 {
+  width: 18px;
+  height: 18px;
 }
 
   </style>
@@ -277,16 +252,13 @@
 
         </ul>
       </div>
-  <div class="dpx_ytWrap_324">
-    <a href="https://www.youtube.com/@dpmods" target="_blank" class="dpx_btn_yt_999">
-      <span class="dpx_logo_yt_517">
-        <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
-          <path d="M10 15V9l5 3-5 3z"></path>
-        </svg>
-      </span>
-      <span class="dpx_text_yt_726">Subscribe</span>
-    </a>
-  </div>
+ <a href="https://www.youtube.com/@dpmods" target="_blank" class="ytBtn_dpx_493">
+  <svg viewBox="0 0 24 24" fill="currentColor" class="ytIcon_dpx_493">
+    <path d="M10 15V9l5 3-5 3z"></path>
+  </svg>
+  <span>Subscribe</span>
+</a>
+
       <a href="https://t.me/dp_mods" class="telegram-btn" target="_blank">Join My Telegram</a>
     </div>
 
