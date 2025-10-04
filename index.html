@@ -167,6 +167,70 @@
   .dpmods-hyper-btn{ display:block; width:100%; text-align:center; margin-bottom:8px; }
   .dpmods-ghost{ margin-left:0 !important; }
 }
+
+    body {
+  background: #111;
+  color: #fff;
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.dpx_ytWrap_324 {
+  text-align: center;
+}
+
+.dpx_btn_yt_999 {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #ff0000;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+  position: relative;
+  overflow: hidden;
+  transition: 0.3s ease;
+}
+
+.dpx_btn_yt_999::before {
+  content: "";
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  background: rgba(255, 255, 255, 0.15);
+  transition: 0.5s;
+}
+
+.dpx_btn_yt_999:hover::before {
+  width: 0;
+  height: 0;
+}
+
+.dpx_btn_yt_999:hover {
+  background: #e60000;
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.8);
+  transform: scale(1.05);
+}
+
+.dpx_logo_yt_517 {
+  display: flex;
+  align-items: center;
+}
+
+.dpx_text_yt_726 {
+  letter-spacing: 0.5px;
+}
+
   </style>
 </head>
 <body>
