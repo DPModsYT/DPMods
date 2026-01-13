@@ -17,7 +17,8 @@
       height: 100%;
       font-family: 'Poppins', sans-serif;
       color: #fff;
-      overflow: hidden; /* Prevents scrolling until enabled */
+      overflow: hidden;
+      background: #000; /* Fallback for video load delay */
     }
 
     /* Background Video */
@@ -51,11 +52,11 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-end; /* Align to bottom */
+      justify-content: flex-end;
       padding-bottom: 80px;
       cursor: pointer;
       transition: transform 0.8s ease-in-out, opacity 0.8s ease;
-      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
     }
 
     #intro-screen.hidden {
@@ -71,6 +72,7 @@
       text-transform: uppercase;
       font-weight: 600;
       animation: pulse 2s infinite;
+      text-shadow: 0 0 10px rgba(255,255,255,0.5);
     }
 
     .chevron {
@@ -107,10 +109,9 @@
       /* Initial state: Hidden below screen */
       opacity: 0;
       transform: translateY(100vh); 
-      transition: all 1s cubic-bezier(0.19, 1, 0.22, 1); /* Smooth eased transition */
+      transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
     }
 
-    /* This class is added via JS to slide the panel up */
     .container.active {
       opacity: 1;
       transform: translateY(0);
@@ -120,7 +121,7 @@
       background: rgba(255, 255, 255, 0.1);
       border-radius: 20px;
       padding: 40px 30px;
-      backdrop-filter: blur(15px); /* Stronger blur for glass effect */
+      backdrop-filter: blur(15px);
       -webkit-backdrop-filter: blur(15px);
       border: 1px solid rgba(255, 255, 255, 0.2);
       text-align: center;
@@ -200,11 +201,12 @@
 
   <video autoplay muted loop playsinline>
     <source src="media/bg.mp4" type="video/mp4">
-    Your browser does not support HTML5 video.
-  </video>
+    </video>
   <div class="overlay"></div>
 
-  <audio id="bgMusic" src="https://res.cloudinary.com/darpzie2c/video/upload/v1768332638/hacker_lutuzj.mp3" loop></audio>
+  <audio id="bgMusic" loop>
+    <source src="https://res.cloudinary.com/darpzie2c/video/upload/v1768332638/hacker_lutuzj.mp3" type="audio/mp3">
+  </audio>
 
   <div id="intro-screen">
     <div class="chevron"></div>
@@ -266,7 +268,6 @@
 
   <script>
     // --- Logic for Swipe and Music ---
-    
     let touchStartY = 0;
     let touchEndY = 0;
     const introScreen = document.getElementById('intro-screen');
@@ -274,26 +275,36 @@
     const audio = document.getElementById('bgMusic');
     let hasEntered = false;
 
-    // Function to handle the transition
+    // Function to handle site entry
     function enterSite() {
-      if (hasEntered) return; // Prevent double trigger
+      if (hasEntered) return;
       hasEntered = true;
 
-      // 1. Play Music
-      // Note: Browsers require user interaction to play audio. 
-      // The swipe/click count as interaction.
-      audio.play().catch(error => {
-        console.log("Audio play failed (browser policy):", error);
-      });
+      // Force volume to 100% just in case
+      audio.volume = 1.0; 
+      
+      // Play Audio - The 'catch' block handles browser errors
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.then(_ => {
+          console.log("Audio playing successfully");
+        })
+        .catch(error => {
+          console.log("Browser prevented auto-play. User interaction needed.", error);
+        });
+      }
 
-      // 2. Animate Screens
+      // Animate Screens
       introScreen.classList.add('hidden');
       mainContent.classList.add('active');
     }
 
-    // --- Touch Event Listeners (Mobile Swipe) ---
+    // --- Touch Logic ---
     document.addEventListener('touchstart', e => {
       touchStartY = e.changedTouches[0].screenY;
+      // TRICK: On some browsers, playing audio on 'start' (even if muted/paused instantly) 
+      // unlocks the audio engine for the subsequent 'play' call.
+      // We don't play yet, just preparing the browser.
     }, {passive: true});
 
     document.addEventListener('touchend', e => {
@@ -302,15 +313,17 @@
     }, {passive: true});
 
     function handleGesture() {
-      // If user swipes UP (start > end) by at least 50px
+      // Swipe Up logic (start > end)
       if (touchStartY - touchEndY > 50) {
         enterSite();
       }
     }
 
-    // --- Desktop/Mouse Support ---
-    // Allow clicking the intro screen or scrolling to enter as well
+    // --- Desktop Click Logic ---
+    // If they click anywhere on the intro screen, it should also work
     introScreen.addEventListener('click', enterSite);
+
+    // --- Mouse Wheel Logic ---
     window.addEventListener('wheel', (e) => {
       if (e.deltaY > 0 && !hasEntered) enterSite();
     });
