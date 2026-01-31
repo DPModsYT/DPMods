@@ -11,12 +11,11 @@
     /* --- VARIABLES --- */
     :root {
       --neon-purple: #bc13fe;
-      --glass-bg: rgba(20, 0, 40, 0.6); /* Slightly darker for better readability over video */
+      --glass-bg: rgba(20, 0, 40, 0.65);
       --glass-border: rgba(188, 19, 254, 0.5);
       --glow: 0 0 18px rgba(188, 19, 254, 0.6);
     }
 
-    /* --- RESET --- */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
     html, body { 
@@ -24,20 +23,18 @@
       width: 100%;
       font-family: 'Poppins', sans-serif; 
       color: #fff; 
-      background: #000; /* Fallback color if video doesn't load */
+      background: #000;
       overflow-x: hidden;
       scroll-behavior: smooth;
     }
 
-    /* --- BACKGROUND VIDEO (FIXED) --- */
+    /* --- FIXED BACKGROUND VIDEO --- */
     video#bg-video {
       position: fixed;
-      top: 0; 
-      left: 0;
-      width: 100%; 
-      height: 100%;
-      object-fit: cover; /* Ensures video covers entire screen on mobile & PC */
-      z-index: -99; /* Puts video behind everything */
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      object-fit: cover;
+      z-index: -99;
     }
 
     /* --- INTRO SCREEN --- */
@@ -54,7 +51,6 @@
     }
     #intro-screen.hidden { transform: translateY(-100%); }
 
-    /* Android Optimized Button */
     .dive-btn {
       padding: 14px 35px;
       font-size: 1rem;
@@ -68,24 +64,53 @@
       text-transform: uppercase;
       letter-spacing: 2px;
       transition: 0.3s;
-      outline: none;
-      -webkit-tap-highlight-color: transparent;
     }
-    .dive-btn:hover, .dive-btn:active { 
-      background: var(--neon-purple); 
-      box-shadow: 0 0 40px var(--neon-purple); 
+    .dive-btn:hover { background: var(--neon-purple); box-shadow: 0 0 40px var(--neon-purple); }
+
+    /* --- MARQUEE NOTIFICATION --- */
+    .marquee-container {
+      width: 100%;
+      background: rgba(188, 19, 254, 0.15); /* Purple tint */
+      border-bottom: 1px solid var(--neon-purple);
+      backdrop-filter: blur(10px);
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 10px 0;
+      position: relative;
+      z-index: 10;
+    }
+
+    .marquee-content {
+      display: inline-block;
+      animation: scroll-left 25s linear infinite;
+      padding-left: 100%; /* Start from right */
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #fff;
+    }
+
+    .marquee-content span {
+      margin-right: 40px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    @keyframes scroll-left {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
     }
 
     /* --- MAIN CONTAINER --- */
     .container {
       position: relative;
       z-index: 1;
-      max-width: 800px; /* Optimal reading width */
+      max-width: 800px;
       margin: 0 auto;
       padding: 30px 20px;
       opacity: 0;
       transform: translateY(50px);
-      transition: opacity 1s ease, transform 1s ease;
+      transition: 1s ease;
     }
     .container.active { opacity: 1; transform: translateY(0); }
 
@@ -93,7 +118,7 @@
     .glass-card {
       background: var(--glass-bg);
       backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px); /* Safari support */
+      -webkit-backdrop-filter: blur(15px);
       border: 1px solid var(--glass-border);
       border-radius: 24px;
       padding: 35px;
@@ -101,12 +126,10 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
 
-    /* --- TYPOGRAPHY & ELEMENTS --- */
     .profile-header { text-align: center; }
     
     .dp-logo {
-      width: 130px;
-      height: 130px;
+      width: 130px; height: 130px;
       border-radius: 50%;
       border: 3px solid var(--neon-purple);
       padding: 4px;
@@ -116,12 +139,7 @@
       background: rgba(0,0,0,0.2);
     }
 
-    h1 { 
-      font-size: 3rem; 
-      text-shadow: var(--glow); 
-      margin-bottom: 8px; 
-      line-height: 1.2;
-    }
+    h1 { font-size: 3rem; text-shadow: var(--glow); margin-bottom: 8px; }
     .accent { color: var(--neon-purple); }
 
     .section-title { 
@@ -133,54 +151,35 @@
       gap: 10px;
     }
 
-    p { line-height: 1.7; opacity: 0.9; font-size: 0.95rem; }
-
     /* --- SKILLS GRID --- */
-    .skill-grid { 
-      display: grid; 
-      grid-template-columns: repeat(2, 1fr); /* 2 columns on mobile */
-      gap: 12px; 
-    }
+    .skill-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
     .skill-item { 
       background: rgba(255,255,255,0.05); 
       padding: 12px; 
       border-radius: 12px; 
       border: 1px solid rgba(188, 19, 254, 0.3);
       text-align: center;
-      font-size: 0.9rem;
     }
 
     /* --- SOCIAL LINKS --- */
-    .social-links { 
-      display: flex; 
-      flex-wrap: wrap; 
-      justify-content: center; 
-      gap: 12px; 
-      margin-top: 20px; 
-    }
+    .social-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 20px; }
     .btn-link {
       padding: 10px 24px;
       border-radius: 50px;
       text-decoration: none;
       color: #fff;
-      font-size: 0.85rem;
       border: 1px solid var(--glass-border);
       background: rgba(0,0,0,0.2);
       transition: 0.3s;
       display: inline-flex;
-      align-items: center;
-      gap: 8px;
+      align-items: center; gap: 8px;
     }
     .btn-link:hover { background: var(--neon-purple); transform: translateY(-2px); }
 
-    /* --- MOBILE RESPONSIVE TWEAKS --- */
     @media (max-width: 600px) {
       .container { padding: 20px 15px; }
-      .glass-card { padding: 25px 20px; margin-bottom: 20px; }
       h1 { font-size: 2.2rem; }
       .dp-logo { width: 110px; height: 110px; }
-      .section-title { font-size: 1.3rem; }
-      .dive-btn { width: 80%; text-align: center; } /* Wider button for easier tapping */
     }
   </style>
 </head>
@@ -199,6 +198,18 @@
   </div>
 
   <div class="container" id="main-content">
+
+    <div class="glass-card" style="padding: 0; overflow: hidden; border-radius: 15px;">
+      <div class="marquee-container">
+        <div class="marquee-content">
+          <span>🔥 <strong>GTA SA Graphic ModPack V2:</strong> Now Available!</span>
+          <span>📥 <strong>New Update:</strong> Update Dialog Direct Download Added</span>
+          <span>🕹️ <strong>Godot Engine:</strong> Custom Virtual Joystick Script</span>
+          <span>👻 <strong>Unity 3D:</strong> Delivery-Driver Horror Game</span>
+          <span>🛠️ <strong>Android:</strong> GTA San Andreas Modding Tools</span>
+          </div>
+      </div>
+    </div>
     
     <div class="glass-card profile-header">
       <img src="images/file.png" alt="DPMods" class="dp-logo">
@@ -224,17 +235,7 @@
         <li style="margin-bottom: 10px; padding-left: 15px; border-left: 2px solid var(--neon-purple);">
           <strong>Milestone:</strong> 100+ High-Quality Video Uploads.
         </li>
-        <li style="padding-left: 15px; border-left: 2px solid var(--neon-purple);">
-          <strong>Community:</strong> Empowering users with unique tools.
-        </li>
       </ul>
-    </div>
-
-    <div class="glass-card">
-      <h2 class="section-title"><i class="fas fa-user-circle"></i> About Me</h2>
-      <p>
-        I am a 22-year-old developer passionate about Android architecture. My work ranges from creating automation tools for Telegram to building custom scripts for game engines like Godot.
-      </p>
     </div>
 
     <div class="glass-card">
@@ -250,11 +251,12 @@
     </div>
 
     <div class="glass-card">
-      <h2 class="section-title"><i class="fas fa-rocket"></i> Projects</h2>
+      <h2 class="section-title"><i class="fas fa-rocket"></i> Active Projects</h2>
       <ul style="list-style: none; line-height: 2;">
+        <li>🚀 <strong>Graphic ModPack V2:</strong> High quality texture overhaul.</li>
+        <li>📲 <strong>Update Dialog:</strong> New direct download features added.</li>
         <li>🕹️ <strong>Godot Engine:</strong> Custom virtual joystick script.</li>
         <li>👻 <strong>Unity 3D:</strong> Delivery-driver horror game.</li>
-        <li>🛠️ <strong>Android:</strong> GTA San Andreas modding tools.</li>
       </ul>
     </div>
 
