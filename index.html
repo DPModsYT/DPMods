@@ -11,11 +11,12 @@
     /* --- VARIABLES --- */
     :root {
       --neon-purple: #bc13fe;
-      --glass-bg: rgba(20, 0, 40, 0.65);
-      --glass-border: rgba(188, 19, 254, 0.5);
+      --glass-bg: rgba(15, 0, 30, 0.5); /* More transparent for video visibility */
+      --glass-border: rgba(188, 19, 254, 0.4);
       --glow: 0 0 18px rgba(188, 19, 254, 0.6);
     }
 
+    /* --- RESET --- */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
     html, body { 
@@ -23,21 +24,33 @@
       width: 100%;
       font-family: 'Poppins', sans-serif; 
       color: #fff; 
-      background: #000;
+      /* TRANSPARENT BACKGROUND to let video show */
+      background: transparent; 
       overflow-x: hidden;
       scroll-behavior: smooth;
     }
 
-    /* --- FIXED BACKGROUND VIDEO --- */
+    /* --- FIXED BACKGROUND VIDEO (LAYER -100) --- */
     video#bg-video {
       position: fixed;
-      top: 0; left: 0;
-      width: 100vw; height: 100vh;
-      object-fit: cover;
-      z-index: -99;
+      top: 0; 
+      left: 0;
+      width: 100vw; 
+      height: 100vh;
+      object-fit: cover; /* Ensures video fills screen without black bars */
+      z-index: -100; /* Puts it behind EVERYTHING */
+      filter: brightness(0.6); /* Slight dim to make text readable */
     }
 
-    /* --- INTRO SCREEN --- */
+    /* Fallback background color in case video doesn't load immediately */
+    .bg-fallback {
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: #000;
+        z-index: -101;
+    }
+
+    /* --- INTRO SCREEN (LAYER 9999) --- */
     #intro-screen {
       position: fixed;
       top: 0; left: 0;
@@ -58,42 +71,45 @@
       border: 2px solid var(--neon-purple);
       border-radius: 50px;
       color: #fff;
-      background: rgba(0,0,0,0.3);
+      background: rgba(0,0,0,0.5);
       cursor: pointer;
       box-shadow: var(--glow);
       text-transform: uppercase;
       letter-spacing: 2px;
       transition: 0.3s;
     }
-    .dive-btn:hover { background: var(--neon-purple); box-shadow: 0 0 40px var(--neon-purple); }
+    .dive-btn:hover { background: var(--neon-purple); box-shadow: 0 0 50px var(--neon-purple); }
 
-    /* --- MARQUEE NOTIFICATION --- */
-    .marquee-container {
+    /* --- BOTTOM MARQUEE (LAYER 5000) --- */
+    .marquee-fixed-bottom {
+      position: fixed;
+      bottom: 0;
+      left: 0;
       width: 100%;
-      background: rgba(188, 19, 254, 0.15); /* Purple tint */
-      border-bottom: 1px solid var(--neon-purple);
+      background: rgba(20, 0, 40, 0.9); /* Dark background for readability */
+      border-top: 2px solid var(--neon-purple);
       backdrop-filter: blur(10px);
+      z-index: 5000;
+      padding: 12px 0;
       overflow: hidden;
       white-space: nowrap;
-      padding: 10px 0;
-      position: relative;
-      z-index: 10;
+      box-shadow: 0 -5px 20px rgba(188, 19, 254, 0.3);
     }
 
     .marquee-content {
       display: inline-block;
-      animation: scroll-left 25s linear infinite;
-      padding-left: 100%; /* Start from right */
+      animation: scroll-left 20s linear infinite;
+      padding-left: 100%;
       font-weight: 600;
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       color: #fff;
     }
 
     .marquee-content span {
-      margin-right: 40px;
+      margin-right: 50px;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
 
     @keyframes scroll-left {
@@ -101,13 +117,13 @@
       100% { transform: translateX(-100%); }
     }
 
-    /* --- MAIN CONTAINER --- */
+    /* --- MAIN CONTAINER (LAYER 1) --- */
     .container {
       position: relative;
       z-index: 1;
       max-width: 800px;
       margin: 0 auto;
-      padding: 30px 20px;
+      padding: 40px 20px 100px 20px; /* Extra bottom padding for marquee space */
       opacity: 0;
       transform: translateY(50px);
       transition: 1s ease;
@@ -117,13 +133,13 @@
     /* --- GLASS CARDS --- */
     .glass-card {
       background: var(--glass-bg);
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--glass-border);
       border-radius: 24px;
       padding: 35px;
-      margin-bottom: 25px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      margin-bottom: 30px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
     }
 
     .profile-header { text-align: center; }
@@ -136,7 +152,7 @@
       margin-bottom: 15px;
       object-fit: cover;
       filter: drop-shadow(var(--glow));
-      background: rgba(0,0,0,0.2);
+      background: rgba(0,0,0,0.3);
     }
 
     h1 { font-size: 3rem; text-shadow: var(--glow); margin-bottom: 8px; }
@@ -152,13 +168,14 @@
     }
 
     /* --- SKILLS GRID --- */
-    .skill-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .skill-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
     .skill-item { 
       background: rgba(255,255,255,0.05); 
-      padding: 12px; 
-      border-radius: 12px; 
+      padding: 15px; 
+      border-radius: 15px; 
       border: 1px solid rgba(188, 19, 254, 0.3);
       text-align: center;
+      font-weight: 500;
     }
 
     /* --- SOCIAL LINKS --- */
@@ -177,13 +194,15 @@
     .btn-link:hover { background: var(--neon-purple); transform: translateY(-2px); }
 
     @media (max-width: 600px) {
-      .container { padding: 20px 15px; }
+      .container { padding: 30px 15px 90px 15px; }
       h1 { font-size: 2.2rem; }
       .dp-logo { width: 110px; height: 110px; }
     }
   </style>
 </head>
 <body>
+
+  <div class="bg-fallback"></div>
 
   <video autoplay muted loop playsinline id="bg-video">
     <source src="media/bg.mp4" type="video/mp4">
@@ -197,19 +216,17 @@
     <button class="dive-btn" onclick="startPortfolio()">Dive into Portfolio</button>
   </div>
 
-  <div class="container" id="main-content">
-
-    <div class="glass-card" style="padding: 0; overflow: hidden; border-radius: 15px;">
-      <div class="marquee-container">
-        <div class="marquee-content">
-          <span>🔥 <strong>GTA SA Graphic ModPack V2:</strong> Now Available!</span>
-          <span>📥 <strong>New Update:</strong> Update Dialog Direct Download Added</span>
-          <span>🕹️ <strong>Godot Engine:</strong> Custom Virtual Joystick Script</span>
-          <span>👻 <strong>Unity 3D:</strong> Delivery-Driver Horror Game</span>
-          <span>🛠️ <strong>Android:</strong> GTA San Andreas Modding Tools</span>
-          </div>
-      </div>
+  <div class="marquee-fixed-bottom">
+    <div class="marquee-content">
+        <span>🔥 <strong>GTA SA Graphic ModPack V2:</strong> High Quality Textures</span>
+        <span>📥 <strong>New Update:</strong> Update Dialog Direct Download Features</span>
+        <span>🕹️ <strong>Godot Engine:</strong> Custom Virtual Joystick Script</span>
+        <span>👻 <strong>Unity 3D:</strong> Delivery-Driver Horror Game</span>
+        <span>🛠️ <strong>Android:</strong> GTA San Andreas Modding Tools</span>
     </div>
+  </div>
+
+  <div class="container" id="main-content">
     
     <div class="glass-card profile-header">
       <img src="images/file.png" alt="DPMods" class="dp-logo">
@@ -225,17 +242,12 @@
 
     <div class="glass-card">
       <h2 class="section-title"><i class="fab fa-youtube"></i> YouTube Identity</h2>
-      <p>
-        <strong>DPMods</strong> is a leading technical channel from Madhya Pradesh, India. I specialize in bridging the gap between coding and gaming.
+      <p style="opacity: 0.9; line-height: 1.8;">
+        <strong>DPMods</strong> is a leading technical channel from Madhya Pradesh, India. I specialize in deep-dives into modified games & apps and bridging the gap between coding and gaming.
       </p>
-      <ul style="list-style: none; margin-top: 15px; padding: 0;">
-        <li style="margin-bottom: 10px; padding-left: 15px; border-left: 2px solid var(--neon-purple);">
-          <strong>Content:</strong> Deep-dives into modified games & apps.
-        </li>
-        <li style="margin-bottom: 10px; padding-left: 15px; border-left: 2px solid var(--neon-purple);">
-          <strong>Milestone:</strong> 100+ High-Quality Video Uploads.
-        </li>
-      </ul>
+      <div style="margin-top: 15px; padding: 15px; background: rgba(255,0,0,0.1); border-radius: 15px; border-left: 3px solid #ff0000;">
+        <strong>Milestone:</strong> 100+ High-Quality Video Uploads 🚀
+      </div>
     </div>
 
     <div class="glass-card">
@@ -252,15 +264,15 @@
 
     <div class="glass-card">
       <h2 class="section-title"><i class="fas fa-rocket"></i> Active Projects</h2>
-      <ul style="list-style: none; line-height: 2;">
-        <li>🚀 <strong>Graphic ModPack V2:</strong> High quality texture overhaul.</li>
-        <li>📲 <strong>Update Dialog:</strong> New direct download features added.</li>
+      <ul style="list-style: none; line-height: 2.2;">
+        <li>🚀 <strong>Graphic ModPack V2:</strong> Next-gen texture overhaul.</li>
+        <li>📲 <strong>Update Dialog:</strong> Direct download features added.</li>
         <li>🕹️ <strong>Godot Engine:</strong> Custom virtual joystick script.</li>
         <li>👻 <strong>Unity 3D:</strong> Delivery-driver horror game.</li>
       </ul>
     </div>
 
-    <footer style="text-align: center; opacity: 0.6; font-size: 0.8rem; padding-bottom: 30px;">
+    <footer style="text-align: center; opacity: 0.6; font-size: 0.8rem;">
       © 2026 DPMods | Madhya Pradesh, India
     </footer>
   </div>
