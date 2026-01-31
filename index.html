@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DPMods | Developer & Creator Portfolio</title>
+  <title>DPMods | Neon Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
     :root {
-      --primary: #00c6ff;
-      --secondary: #0072ff;
-      --glass: rgba(255, 255, 255, 0.08);
-      --border: rgba(255, 255, 255, 0.15);
+      --neon-purple: #bc13fe;
+      --deep-purple: #1a0033;
+      --glass: rgba(188, 19, 254, 0.05);
+      --border: rgba(188, 19, 254, 0.3);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -21,7 +21,7 @@
       font-family: 'Poppins', sans-serif; 
       color: #fff; 
       overflow-x: hidden; 
-      background: #050505;
+      background: #000;
       scroll-behavior: smooth;
     }
 
@@ -37,7 +37,7 @@
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: radial-gradient(circle, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.8) 100%);
+      background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(26,0,51,0.7) 100%);
       z-index: -1;
     }
 
@@ -51,92 +51,83 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: #000;
-      transition: transform 1.2s cubic-bezier(0.8, 0, 0.2, 1);
+      background: #050505;
+      transition: transform 1.2s cubic-bezier(0.7, 0, 0.3, 1);
     }
     #intro-screen.hidden { transform: translateY(-100%); }
 
+    /* Small Responsive Button */
     .dive-btn {
-      padding: 20px 50px;
-      font-size: 1.4rem;
+      padding: 12px 30px;
+      font-size: 1rem;
       font-weight: 600;
       color: #fff;
       background: transparent;
-      border: 2px solid var(--primary);
+      border: 2px solid var(--neon-purple);
       border-radius: 50px;
       cursor: pointer;
       text-transform: uppercase;
-      letter-spacing: 4px;
+      letter-spacing: 2px;
       transition: 0.4s;
-      box-shadow: 0 0 25px rgba(0, 198, 255, 0.3);
+      box-shadow: 0 0 15px var(--neon-purple);
     }
-    .dive-btn:hover { background: var(--primary); transform: scale(1.1); box-shadow: 0 0 50px rgba(0, 198, 255, 0.6); }
+    .dive-btn:hover { 
+      background: var(--neon-purple); 
+      box-shadow: 0 0 30px var(--neon-purple);
+      transform: scale(1.05);
+    }
 
     /* Portfolio Container */
     .container {
-      max-width: 1000px;
+      max-width: 900px;
       margin: 0 auto;
-      padding: 60px 20px;
+      padding: 40px 20px;
       opacity: 0;
-      transform: translateY(100px);
-      transition: 1.5s ease;
+      transform: translateY(30px);
+      transition: 1s ease;
     }
     .container.active { opacity: 1; transform: translateY(0); }
 
+    /* Glass UI Cards */
     .glass-card {
       background: var(--glass);
-      backdrop-filter: blur(25px);
-      -webkit-backdrop-filter: blur(25px);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--border);
-      border-radius: 30px;
-      padding: 40px;
-      margin-bottom: 30px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+      border-radius: 24px;
+      padding: 30px;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
     }
 
-    /* Hero Branding */
-    .hero { text-align: center; }
-    .profile-img {
-      width: 160px; height: 160px;
-      border-radius: 50%;
-      border: 4px solid var(--primary);
-      padding: 5px;
-      margin-bottom: 20px;
-      transition: 0.5s;
-    }
-    .profile-img:hover { transform: rotate(360deg); }
-    h1 { font-size: 3.5rem; letter-spacing: -1px; margin-bottom: 10px; }
-    .accent { color: var(--primary); }
+    h1 { font-size: 2.8rem; margin-bottom: 10px; text-shadow: 0 0 10px var(--neon-purple); }
+    .purple-text { color: var(--neon-purple); }
 
     /* Buttons */
-    .btn-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 30px; }
+    .btn-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 20px; }
     .btn-main {
-      padding: 12px 30px;
+      padding: 10px 20px;
       border-radius: 12px;
       text-decoration: none;
       color: #fff;
+      font-size: 0.9rem;
       font-weight: 600;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
       transition: 0.3s;
       display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
-    .yt-btn { background: #ff0000; box-shadow: 0 5px 15px rgba(255,0,0,0.3); }
-    .web-btn { background: var(--secondary); box-shadow: 0 5px 15px rgba(0,114,255,0.3); }
-    .tg-btn { background: #0088cc; }
-    .btn-main:hover { transform: translateY(-5px); filter: brightness(1.2); }
+    .btn-main:hover { background: var(--neon-purple); border-color: #fff; }
 
-    /* Skill Grid */
-    .skills-section { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
-    .skill-box { background: rgba(0,0,0,0.2); padding: 20px; border-radius: 20px; border-left: 4px solid var(--primary); }
-    .skill-box h4 { color: var(--primary); margin-bottom: 5px; }
+    /* Technical Skill Grid */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+    .skill { background: rgba(0,0,0,0.3); padding: 12px; border-radius: 12px; text-align: center; font-size: 0.85rem; border: 1px solid rgba(188, 19, 254, 0.1); }
 
-    /* Footer */
-    footer { text-align: center; margin-top: 50px; opacity: 0.6; padding-bottom: 30px; }
-
-    @media (max-width: 768px) {
-      h1 { font-size: 2.5rem; }
-      .glass-card { padding: 30px 15px; }
+    @media (max-width: 480px) {
+      .dive-btn { padding: 10px 24px; font-size: 0.9rem; }
+      h1 { font-size: 2rem; }
     }
   </style>
 </head>
@@ -147,84 +138,62 @@
   </video>
   <div class="overlay"></div>
 
-  <audio id="bgMusic" loop>
+  <audio id="hackerMusic" loop>
     <source src="https://github.com/DPModsYT/DPMods/raw/refs/heads/main/hacker.mp3" type="audio/mpeg">
   </audio>
 
   <div id="intro-screen">
-    <button class="dive-btn" onclick="launchSite()">Dive into Portfolio</button>
+    <button class="dive-btn" onclick="startPortfolio()">Dive into Portfolio</button>
   </div>
 
   <div class="container" id="main-content">
     
-    <div class="glass-card hero">
-      <img src="images/file.png" alt="DPMods" class="profile-img">
-      <h1>DP<span class="accent">Mods</span></h1>
-      <p style="font-size: 1.1rem; opacity: 0.9;">Professional Android Developer | Graphic & Video Editor</p>
+    <div class="glass-card" style="text-align: center;">
+      <h1>DP<span class="purple-text">Mods</span></h1>
+      <p style="opacity: 0.8; margin-bottom: 20px;">Android Modder | Web Developer | Graphic Artist</p>
       
       <div class="btn-group">
-        <a href="https://www.youtube.com/@dpmods" target="_blank" class="btn-main yt-btn">
-          <i class="fab fa-youtube"></i> YouTube (100+ Videos)
-        </a>
-        <a href="https://dpmods.com" target="_blank" class="btn-main web-btn">
-          <i class="fas fa-globe"></i> dpmods.com
-        </a>
-        <a href="https://t.me/dp_mods" target="_blank" class="btn-main tg-btn">
-          <i class="fab fa-telegram"></i> Telegram Channel
-        </a>
+        <a href="https://dpmods.com" target="_blank" class="btn-main"><i class="fas fa-globe"></i> dpmods.com</a>
+        <a href="https://www.youtube.com/@dpmods" target="_blank" class="btn-main"><i class="fab fa-youtube"></i> YouTube</a>
+        <a href="https://t.me/dp_mods" target="_blank" class="btn-main"><i class="fab fa-telegram"></i> Telegram</a>
       </div>
     </div>
 
     <div class="glass-card">
-      <h2 style="margin-bottom: 25px;"><i class="fas fa-info-circle accent"></i> About Me</h2>
-      <p style="line-height: 1.8; margin-bottom: 30px;">
-        I am <strong>DPMods</strong>, a specialized developer from India with a passion for gaming modding and technical tools. With deep expertise in Android development, I've created unique tools like a virtual joystick for Godot and managed a YouTube channel with over 100 video uploads. 
-      </p>
-
-      <div class="skills-section">
-        <div class="skill-box">
-          <h4>Programming</h4>
-          <p>Java (70%), Kotlin (30%), Python (70%), JS (60%)</p>
-        </div>
-        <div class="skill-box">
-          <h4>Web Development</h4>
-          <p>HTML & CSS (98%), XML (90%), UI/UX Design (100%)</p>
-        </div>
-        <div class="skill-box">
-          <h4>Creative Media</h4>
-          <p>Graphic Design, Video Editing, Indian Artform Doodles</p>
-        </div>
+      <h2 style="margin-bottom: 20px; font-size: 1.4rem;"><i class="fas fa-terminal purple-text"></i> Technical Expertise</h2>
+      <div class="skills-grid">
+        <div class="skill">UI/UX (100%)</div>
+        <div class="skill">HTML/CSS (98%)</div>
+        <div class="skill">XML (90%)</div>
+        <div class="skill">Java (70%)</div>
+        <div class="skill">Python (70%)</div>
+        <div class="skill">JS (60%)</div>
       </div>
     </div>
 
     <div class="glass-card">
-      <h2 style="margin-bottom: 25px;"><i class="fas fa-rocket accent"></i> Latest Work</h2>
-      <ul style="list-style: none; line-height: 2.2;">
-        <li><i class="fas fa-check accent"></i> Developing <strong>DPMods Discussion</strong> Community</li>
-        <li><i class="fas fa-check accent"></i> <strong>GTA San Andreas</strong> Modding & Android Tools</li>
-        <li><i class="fas fa-check accent"></i> <strong>Unity 3D Horror Game</strong> Project (Story Center)</li>
-        <li><i class="fas fa-check accent"></i> <strong>Village Life</strong> Photography Series (@jpeg_mood)</li>
+      <h2 style="margin-bottom: 20px; font-size: 1.4rem;"><i class="fas fa-code-branch purple-text"></i> Ongoing Projects</h2>
+      <ul style="list-style: none; line-height: 2;">
+        <li>⚡ <strong>GTA San Andreas</strong> Android Modding Tools</li>
+        <li>🕹️ <strong>Godot</strong> Virtual Joystick Development</li>
+        <li>👻 <strong>Unity 3D</strong> Story-Based Horror Game</li>
+        <li>🎨 <strong>Indian Artform</strong> Doodles & Photography</li>
       </ul>
     </div>
 
-    <footer>
-      <p>© 2026 DPMods | Designed for Global Tech & Creative Community</p>
+    <footer style="text-align: center; opacity: 0.4; font-size: 0.75rem; padding-bottom: 20px;">
+      © 2026 DPMods | All Rights Reserved
     </footer>
   </div>
 
   <script>
-    const music = document.getElementById('bgMusic');
-    const intro = document.getElementById('intro-screen');
-    const content = document.getElementById('main-content');
-
-    function launchSite() {
-      // Audio trigger
+    function startPortfolio() {
+      const music = document.getElementById('hackerMusic');
       music.volume = 0.5;
-      music.play().catch(e => console.log("Audio play blocked."));
+      music.play();
 
-      // UI Transition
-      intro.classList.add('hidden');
-      content.classList.add('active');
+      document.getElementById('intro-screen').classList.add('hidden');
+      document.getElementById('main-content').classList.add('active');
       document.body.style.overflow = "auto";
     }
   </script>
