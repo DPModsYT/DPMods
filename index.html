@@ -10,7 +10,7 @@
   <style>
     :root {
       --neon-purple: #bc13fe;
-      --glass-bg: rgba(20, 0, 40, 0.4); 
+      --glass-bg: rgba(20, 0, 40, 0.45); 
       --glass-border: rgba(188, 19, 254, 0.5);
       --glow: 0 0 20px rgba(188, 19, 254, 0.6);
     }
@@ -22,20 +22,18 @@
       width: 100%;
       font-family: 'Poppins', sans-serif; 
       color: #fff; 
-      /* Ensures background is visible behind content */
-      background: transparent;
+      background: #000;
       overflow-x: hidden;
+      scroll-behavior: smooth;
     }
 
-    /* --- FIXED FULL BACKGROUND VIDEO --- */
+    /* --- FULL IMMERSIVE BACKGROUND --- */
     video#bg-video {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      object-fit: cover; /* This makes the video cover the full screen */
-      z-index: -2; /* Keeps it behind everything */
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      object-fit: cover;
+      z-index: -2;
     }
 
     /* --- INTRO SCREEN --- */
@@ -53,56 +51,101 @@
     #intro-screen.hidden { transform: translateY(-100%); }
 
     .dive-btn {
-      padding: 10px 25px;
-      font-size: 0.9rem;
+      padding: 12px 30px;
+      font-size: 1rem;
       border: 2px solid var(--neon-purple);
       border-radius: 50px;
       color: #fff;
       background: transparent;
       cursor: pointer;
       box-shadow: var(--glow);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      transition: 0.3s;
     }
+    .dive-btn:hover { background: var(--neon-purple); box-shadow: 0 0 40px var(--neon-purple); }
 
-    /* --- GLASS UI CONTAINERS --- */
+    /* --- CONTAINER & GLASS UI --- */
     .container {
       position: relative;
-      z-index: 1; /* Ensures content sits on top of video */
+      z-index: 1;
       max-width: 900px;
       margin: 0 auto;
-      padding: 60px 20px;
+      padding: 40px 20px;
       opacity: 0;
-      transform: translateY(30px);
-      transition: 1s ease;
+      transform: translateY(40px);
+      transition: 1.5s ease;
     }
     .container.active { opacity: 1; transform: translateY(0); }
 
     .glass-card {
       background: var(--glass-bg);
-      backdrop-filter: blur(25px); /* Creates the glass look */
+      backdrop-filter: blur(25px);
       -webkit-backdrop-filter: blur(25px);
       border: 1px solid var(--glass-border);
-      border-radius: 25px;
+      border-radius: 30px;
       padding: 40px;
       margin-bottom: 30px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+      box-shadow: 0 15px 45px rgba(0,0,0,0.6);
     }
 
-    .section-title { color: var(--neon-purple); margin-bottom: 20px; font-size: 1.6rem; }
+    /* --- PROFILE PICTURE SECTION --- */
+    .profile-header { text-align: center; }
+    .dp-logo {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      border: 4px solid var(--neon-purple);
+      padding: 5px;
+      margin-bottom: 20px;
+      object-fit: cover;
+      filter: drop-shadow(var(--glow));
+      transition: 0.5s;
+    }
+    .dp-logo:hover { transform: scale(1.1) rotate(5deg); }
 
-    /* Expertise Skill Items from your Screenshot */
-    .skill-grid { display: flex; flex-wrap: wrap; gap: 15px; justify-content: center; }
+    h1 { font-size: 3.5rem; text-shadow: var(--glow); margin-bottom: 10px; }
+    .accent { color: var(--neon-purple); }
+
+    .section-title { 
+      color: var(--neon-purple); 
+      margin-bottom: 25px; 
+      font-size: 1.8rem; 
+      display: flex; 
+      align-items: center; 
+      gap: 12px;
+    }
+
+    /* --- SKILLS GRID --- */
+    .skill-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; }
     .skill-item { 
-      background: rgba(0,0,0,0.5); 
-      padding: 15px 25px; 
+      background: rgba(0,0,0,0.4); 
+      padding: 15px; 
       border-radius: 15px; 
       border: 1px solid var(--glass-border);
       text-align: center;
-      min-width: 140px;
+      transition: 0.3s;
     }
+    .skill-item:hover { background: var(--neon-purple); border-color: #fff; }
+
+    /* --- SOCIAL LINKS --- */
+    .social-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 25px; }
+    .btn-link {
+      padding: 10px 20px;
+      border-radius: 50px;
+      text-decoration: none;
+      color: #fff;
+      font-size: 0.9rem;
+      border: 1px solid var(--glass-border);
+      background: rgba(255,255,255,0.05);
+      transition: 0.3s;
+    }
+    .btn-link:hover { background: var(--neon-purple); box-shadow: var(--glow); transform: translateY(-3px); }
 
     @media (max-width: 480px) {
+      h1 { font-size: 2.5rem; }
+      .dp-logo { width: 120px; height: 120px; }
       .glass-card { padding: 25px; }
-      h1 { font-size: 2.2rem; }
     }
   </style>
 </head>
@@ -122,9 +165,24 @@
 
   <div class="container" id="main-content">
     
-    <div class="glass-card" style="text-align: center;">
-      <h1 style="font-size: 3.5rem; text-shadow: var(--glow);">DP<span style="color: var(--neon-purple);">Mods</span></h1>
-      <p style="opacity: 0.9;">Professional Android Developer | Graphic & Video Editor</p>
+    <div class="glass-card profile-header">
+      <img src="images/file.png" alt="DPMods Logo" class="dp-logo">
+      <h1>DP<span class="accent">Mods</span></h1>
+      <p style="font-size: 1.1rem; opacity: 0.9;">Professional Android Developer | Graphic & Video Editor</p>
+      
+      <div class="social-links">
+        <a href="https://dpmods.com" class="btn-link" target="_blank"><i class="fas fa-globe"></i> Website</a>
+        <a href="https://www.youtube.com/@dpmods" class="btn-link" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+        <a href="https://t.me/dp_mods" class="btn-link" target="_blank"><i class="fab fa-telegram"></i> Telegram</a>
+        <a href="https://www.instagram.com/jpeg_mood" class="btn-link" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+      </div>
+    </div>
+
+    <div class="glass-card">
+      <h2 class="section-title"><i class="fas fa-user-astronaut"></i> Biography</h2>
+      <p style="line-height: 1.8; opacity: 0.85;">
+        I am a 22-year-old developer and creator from Madhya Pradesh, India. Known as <strong>DPMods</strong>, I specialize in Android modding and web development. My work blends technical coding with artistic design, ranging from <strong>GTA San Andreas</strong> modding tools to professional graphic and video editing.
+      </p>
     </div>
 
     <div class="glass-card">
@@ -140,14 +198,29 @@
     </div>
 
     <div class="glass-card">
-      <h2 class="section-title"><i class="fas fa-rocket"></i> Active Projects</h2>
+      <h2 class="section-title"><i class="fas fa-palette"></i> Creative Niche (jpeg_mood)</h2>
+      <p style="line-height: 1.8; opacity: 0.85; margin-bottom: 15px;">
+        Under my creative alias <strong>jpeg_mood</strong>, I focus on capturing the nostalgic and rustic vibes of Indian village life.
+      </p>
       <ul style="list-style: none; line-height: 2;">
-        <li>📺 <strong>DPMods YouTube:</strong> Reached over 100 video uploads.</li>
-        <li>🕹️ <strong>Godot Engine:</strong> Developing custom virtual joystick.</li>
-        <li>👻 <strong>Unity 3D:</strong> Developing delivery-driver horror game.</li>
+        <li>📸 <strong>Photography:</strong> Capturing village life and rustic scenes.</li>
+        <li>🎨 <strong>Indian Art:</strong> Creating doodle drawings inspired by traditional Indian artforms.</li>
+        <li>🎞️ <strong>Editing:</strong> Nostalgic aesthetic editing for social media platforms.</li>
       </ul>
     </div>
 
+    <div class="glass-card">
+      <h2 class="section-title"><i class="fas fa-rocket"></i> Active Projects</h2>
+      <ul style="list-style: none; line-height: 2.2;">
+        <li>📺 <strong>DPMods YouTube:</strong> Reached over 100 video uploads focusing on modified apps.</li>
+        <li>🕹️ <strong>Godot Engine:</strong> Developing a high-performance custom virtual joystick.</li>
+        <li>👻 <strong>Unity 3D:</strong> Developing a story-driven delivery-driver horror game.</li>
+      </ul>
+    </div>
+
+    <footer style="text-align: center; opacity: 0.5; font-size: 0.8rem; padding-bottom: 40px;">
+      © 2026 DPMods | Developed with Code & Passion
+    </footer>
   </div>
 
   <script>
