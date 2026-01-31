@@ -2,22 +2,22 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>DPMods | Professional Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
-    /* --- THEME VARIABLES --- */
+    /* --- VARIABLES --- */
     :root {
       --neon-purple: #bc13fe;
-      --glass-bg: rgba(18, 0, 36, 0.65); /* Deep purple tint */
-      --glass-border: rgba(188, 19, 254, 0.4);
-      --glow: 0 0 20px rgba(188, 19, 254, 0.5);
-      --accent-cyan: #00e5ff;
+      --glass-bg: rgba(10, 0, 20, 0.55); /* More transparent for video visibility */
+      --glass-border: rgba(188, 19, 254, 0.5);
+      --glow: 0 0 18px rgba(188, 19, 254, 0.6);
+      --cyan-accent: #00e5ff;
     }
 
-    /* --- RESET & BASE --- */
+    /* --- RESET --- */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
     html, body { 
@@ -25,20 +25,20 @@
       width: 100%;
       font-family: 'Poppins', sans-serif; 
       color: #fff; 
-      background: #000;
+      background: #000; /* Fallback */
       overflow-x: hidden;
       scroll-behavior: smooth;
     }
 
     /* --- FIXED BACKGROUND VIDEO --- */
-    /* This setup ensures the video stays fixed and covers the whole screen */
+    /* Z-Index -10 ensures it stays behind everything */
     video#bg-video {
       position: fixed;
       top: 0; left: 0;
-      width: 100vw; height: 100vh;
+      width: 100%; height: 100%;
       object-fit: cover;
-      z-index: -100;
-      filter: brightness(0.5); /* Dimmed for better text readability */
+      z-index: -10;
+      filter: brightness(0.6); /* Improves text readability */
     }
 
     /* --- INTRO SCREEN --- */
@@ -56,7 +56,7 @@
     #intro-screen.hidden { transform: translateY(-100%); }
 
     .dive-btn {
-      padding: 14px 40px;
+      padding: 15px 45px;
       font-size: 1rem;
       font-weight: 600;
       border: 2px solid var(--neon-purple);
@@ -66,25 +66,85 @@
       cursor: pointer;
       box-shadow: var(--glow);
       text-transform: uppercase;
-      letter-spacing: 3px;
+      letter-spacing: 2px;
       transition: 0.3s;
     }
     .dive-btn:hover { background: var(--neon-purple); box-shadow: 0 0 50px var(--neon-purple); }
 
-    /* --- MAIN LAYOUT --- */
+    /* --- FIXED BOTTOM PROJECT TICKER --- */
+    .bottom-ticker-bar {
+      position: fixed;
+      bottom: 0; left: 0;
+      width: 100%;
+      height: 60px;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(15px);
+      border-top: 2px solid var(--neon-purple);
+      z-index: 5000;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 -10px 30px rgba(188, 19, 254, 0.2);
+    }
+
+    .ticker-label {
+      background: var(--neon-purple);
+      color: #fff;
+      padding: 0 20px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      white-space: nowrap;
+      z-index: 5002;
+      box-shadow: 5px 0 15px rgba(0,0,0,0.5);
+    }
+
+    .ticker-wrapper {
+      flex-grow: 1;
+      overflow: hidden;
+      position: relative;
+      height: 100%;
+      display: flex;
+      align-items: center;
+    }
+
+    .ticker-move {
+      display: inline-block;
+      white-space: nowrap;
+      animation: ticker 25s linear infinite;
+      padding-left: 100%; /* Start off-screen */
+    }
+
+    .ticker-item {
+      display: inline-block;
+      padding: 0 40px;
+      font-size: 0.95rem;
+      color: #e0e0e0;
+    }
+    .ticker-item strong { color: var(--cyan-accent); }
+
+    @keyframes ticker {
+      0% { transform: translate3d(0, 0, 0); }
+      100% { transform: translate3d(-100%, 0, 0); }
+    }
+
+    /* --- MAIN CONTENT CONTAINER --- */
     .container {
       position: relative;
       z-index: 1;
-      max-width: 900px;
+      max-width: 850px;
       margin: 0 auto;
-      padding: 40px 20px;
+      /* Padding bottom ensures content isn't hidden behind the ticker */
+      padding: 40px 20px 100px 20px; 
       opacity: 0;
-      transform: translateY(50px);
+      transform: translateY(40px);
       transition: 1s ease;
     }
     .container.active { opacity: 1; transform: translateY(0); }
 
-    /* --- GLASS CARD STYLING --- */
+    /* --- GLASS CARDS --- */
     .glass-card {
       background: var(--glass-bg);
       backdrop-filter: blur(20px);
@@ -92,58 +152,11 @@
       border: 1px solid var(--glass-border);
       border-radius: 24px;
       padding: 35px;
-      margin-bottom: 30px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.6);
-      position: relative;
-      overflow: hidden;
+      margin-bottom: 25px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.5);
     }
 
-    /* --- NEW UPCOMING PROJECTS SECTION --- */
-    .projects-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 20px;
-      color: var(--neon-purple);
-      font-size: 1.4rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    
-    .ticker-wrap {
-      width: 100%;
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 12px;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      overflow: hidden;
-      white-space: nowrap;
-      padding: 15px 0;
-      position: relative;
-    }
-
-    .ticker-move {
-      display: inline-block;
-      white-space: nowrap;
-      padding-right: 50px;
-      animation: ticker 25s linear infinite;
-    }
-
-    .ticker-item {
-      display: inline-block;
-      padding: 0 30px;
-      font-size: 0.95rem;
-      color: #e0e0e0;
-    }
-    
-    .ticker-item strong { color: var(--accent-cyan); }
-
-    @keyframes ticker {
-      0% { transform: translate3d(0, 0, 0); }
-      100% { transform: translate3d(-50%, 0, 0); } /* Moves half way (since content is duplicated) */
-    }
-
-    /* --- PROFILE & BRANDING --- */
+    /* --- PROFILE HEADER --- */
     .profile-header { text-align: center; }
     .dp-logo {
       width: 140px; height: 140px;
@@ -155,11 +168,17 @@
       filter: drop-shadow(var(--glow));
       background: rgba(0,0,0,0.3);
     }
-    h1 { font-size: 3.2rem; text-shadow: var(--glow); margin-bottom: 8px; }
+    h1 { font-size: 3rem; text-shadow: var(--glow); margin-bottom: 8px; }
     .accent { color: var(--neon-purple); }
 
-    /* --- SKILLS GRID --- */
-    .section-title { color: var(--neon-purple); margin-bottom: 20px; font-size: 1.5rem; display: flex; align-items: center; gap: 10px; }
+    /* --- SECTIONS --- */
+    .section-title { 
+      color: var(--neon-purple); 
+      margin-bottom: 20px; 
+      font-size: 1.5rem; 
+      display: flex; align-items: center; gap: 10px; 
+    }
+
     .skill-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
     .skill-item { 
       background: rgba(255,255,255,0.05); 
@@ -169,9 +188,9 @@
       text-align: center;
       transition: 0.3s;
     }
-    .skill-item:hover { border-color: var(--neon-purple); background: rgba(188, 19, 254, 0.1); }
+    .skill-item:hover { border-color: var(--neon-purple); background: rgba(188, 19, 254, 0.15); }
 
-    /* --- SOCIAL BUTTONS --- */
+    /* --- SOCIAL LINKS --- */
     .social-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 25px; }
     .btn-link {
       padding: 10px 24px;
@@ -185,11 +204,18 @@
     }
     .btn-link:hover { background: var(--neon-purple); transform: translateY(-3px); box-shadow: var(--glow); }
 
+    /* --- MOBILE OPTIMIZATION --- */
     @media (max-width: 600px) {
-      .glass-card { padding: 25px; }
       h1 { font-size: 2.4rem; }
       .dp-logo { width: 120px; height: 120px; }
-      .projects-header { font-size: 1.1rem; }
+      .glass-card { padding: 25px 20px; }
+      .ticker-label span { display: none; } /* Hide icon text on very small screens */
+      .ticker-label { padding: 0 15px; }
+      .ticker-label::after { content: "NEWS"; } /* Shorter text for mobile */
+      .dive-btn { width: 80%; }
+    }
+    @media (min-width: 601px) {
+       .ticker-label::after { content: "UPCOMING PROJECTS"; }
     }
   </style>
 </head>
@@ -207,6 +233,21 @@
     <button class="dive-btn" onclick="startPortfolio()">Dive into Portfolio</button>
   </div>
 
+  <div class="bottom-ticker-bar">
+    <div class="ticker-label"><i class="fas fa-bolt" style="margin-right:8px;"></i></div>
+    <div class="ticker-wrapper">
+      <div class="ticker-move">
+        <span class="ticker-item">🔥 <strong>GTA SA Graphic ModPack V2:</strong> High Quality Textures</span>
+        <span class="ticker-item">📥 <strong>New Update:</strong> Dialog Direct Download Features Added</span>
+        <span class="ticker-item">🕹️ <strong>Godot Engine:</strong> Custom Virtual Joystick Script</span>
+        <span class="ticker-item">👻 <strong>Unity 3D:</strong> Delivery-Driver Horror Game</span>
+        <span class="ticker-item">🛠️ <strong>Android:</strong> Modding Tools Update</span>
+        <span class="ticker-item">🔥 <strong>GTA SA Graphic ModPack V2:</strong> High Quality Textures</span>
+        <span class="ticker-item">📥 <strong>New Update:</strong> Dialog Direct Download Features Added</span>
+      </div>
+    </div>
+  </div>
+
   <div class="container" id="main-content">
     
     <div class="glass-card profile-header">
@@ -222,39 +263,17 @@
     </div>
 
     <div class="glass-card">
-      <div class="projects-header">
-        <i class="fas fa-bolt" style="color: #ffd700;"></i> Upcoming Projects
-      </div>
-      
-      <div class="ticker-wrap">
-        <div class="ticker-move">
-          <span class="ticker-item">🔥 <strong>GTA SA Graphic ModPack V2:</strong> High Quality Textures</span>
-          <span class="ticker-item">📥 <strong>New Update:</strong> Dialog Direct Download Added</span>
-          <span class="ticker-item">🕹️ <strong>Godot Engine:</strong> Custom Virtual Joystick</span>
-          <span class="ticker-item">👻 <strong>Unity 3D:</strong> Delivery-Driver Horror Game</span>
-          <span class="ticker-item">🛠️ <strong>Android:</strong> Modding Tools Update</span>
-          
-          <span class="ticker-item">🔥 <strong>GTA SA Graphic ModPack V2:</strong> High Quality Textures</span>
-          <span class="ticker-item">📥 <strong>New Update:</strong> Dialog Direct Download Added</span>
-          <span class="ticker-item">🕹️ <strong>Godot Engine:</strong> Custom Virtual Joystick</span>
-          <span class="ticker-item">👻 <strong>Unity 3D:</strong> Delivery-Driver Horror Game</span>
-          <span class="ticker-item">🛠️ <strong>Android:</strong> Modding Tools Update</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="glass-card">
       <h2 class="section-title"><i class="fab fa-youtube"></i> YouTube Identity</h2>
       <p style="line-height: 1.8; opacity: 0.9;">
         <strong>DPMods</strong> is a leading technical channel from Madhya Pradesh, India. I specialize in deep-dives into modified games & apps, bridging the gap between coding and gaming.
       </p>
-      <div style="margin-top: 15px; padding: 15px; background: rgba(188, 19, 254, 0.1); border-left: 3px solid var(--neon-purple); border-radius: 8px;">
+      <div style="margin-top: 15px; padding: 15px; border-left: 3px solid var(--neon-purple); background: rgba(255,255,255,0.05); border-radius: 8px;">
         <strong>Milestone:</strong> 100+ High-Quality Video Uploads 🚀
       </div>
     </div>
 
     <div class="glass-card">
-      <h2 class="section-title"><i class="fas fa-code"></i> Skills & Expertise</h2>
+      <h2 class="section-title"><i class="fas fa-code"></i> Skills</h2>
       <div class="skill-grid">
         <div class="skill-item">UI/UX (100%)</div>
         <div class="skill-item">HTML/CSS (98%)</div>
@@ -272,7 +291,7 @@
       </p>
     </div>
 
-    <footer style="text-align: center; opacity: 0.6; font-size: 0.8rem; padding-bottom: 30px;">
+    <footer style="text-align: center; opacity: 0.6; font-size: 0.8rem; padding-bottom: 20px;">
       © 2026 DPMods | Madhya Pradesh, India
     </footer>
   </div>
