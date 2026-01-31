@@ -3,21 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DPMods | Creative Developer Portfolio</title>
+  <title>DPMods | Developer & Creator Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
+    :root {
+      --primary: #00c6ff;
+      --secondary: #0072ff;
+      --glass: rgba(255, 255, 255, 0.08);
+      --border: rgba(255, 255, 255, 0.15);
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { 
       height: 100%; 
       font-family: 'Poppins', sans-serif; 
       color: #fff; 
       overflow-x: hidden; 
+      background: #050505;
       scroll-behavior: smooth;
     }
 
-    /* --- Background Video Setup --- */
+    /* Background Video */
     video#bg-video {
       position: fixed;
       top: 0; left: 0;
@@ -29,11 +37,11 @@
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.7); /* Deep overlay for better focus */
+      background: radial-gradient(circle, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.8) 100%);
       z-index: -1;
     }
 
-    /* --- Intro Screen (Music Trigger) --- */
+    /* Intro Screen */
     #intro-screen {
       position: fixed;
       top: 0; left: 0;
@@ -44,105 +52,91 @@
       align-items: center;
       justify-content: center;
       background: #000;
-      transition: transform 1s cubic-bezier(0.85, 0, 0.15, 1);
+      transition: transform 1.2s cubic-bezier(0.8, 0, 0.2, 1);
     }
     #intro-screen.hidden { transform: translateY(-100%); }
 
     .dive-btn {
-      padding: 18px 45px;
-      font-size: 1.3rem;
+      padding: 20px 50px;
+      font-size: 1.4rem;
       font-weight: 600;
       color: #fff;
       background: transparent;
-      border: 2px solid #00c6ff;
+      border: 2px solid var(--primary);
       border-radius: 50px;
       cursor: pointer;
       text-transform: uppercase;
-      letter-spacing: 3px;
+      letter-spacing: 4px;
       transition: 0.4s;
-      box-shadow: 0 0 20px rgba(0, 198, 255, 0.4);
+      box-shadow: 0 0 25px rgba(0, 198, 255, 0.3);
     }
-    .dive-btn:hover {
-      background: #00c6ff;
-      box-shadow: 0 0 40px rgba(0, 198, 255, 0.7);
-      transform: scale(1.05);
-    }
+    .dive-btn:hover { background: var(--primary); transform: scale(1.1); box-shadow: 0 0 50px rgba(0, 198, 255, 0.6); }
 
-    /* --- Portfolio Content Layout --- */
+    /* Portfolio Container */
     .container {
-      max-width: 900px;
+      max-width: 1000px;
       margin: 0 auto;
-      padding: 80px 20px;
+      padding: 60px 20px;
       opacity: 0;
-      transform: translateY(50px);
-      transition: 1.2s ease-out;
+      transform: translateY(100px);
+      transition: 1.5s ease;
     }
     .container.active { opacity: 1; transform: translateY(0); }
 
     .glass-card {
-      background: rgba(255, 255, 255, 0.07);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: var(--glass);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border: 1px solid var(--border);
       border-radius: 30px;
-      padding: 50px;
-      margin-bottom: 40px;
-      text-align: center;
+      padding: 40px;
+      margin-bottom: 30px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
     }
 
+    /* Hero Branding */
+    .hero { text-align: center; }
     .profile-img {
-      width: 150px; height: 150px;
+      width: 160px; height: 160px;
       border-radius: 50%;
-      border: 4px solid #00c6ff;
+      border: 4px solid var(--primary);
+      padding: 5px;
       margin-bottom: 20px;
-      object-fit: cover;
+      transition: 0.5s;
     }
+    .profile-img:hover { transform: rotate(360deg); }
+    h1 { font-size: 3.5rem; letter-spacing: -1px; margin-bottom: 10px; }
+    .accent { color: var(--primary); }
 
-    h1 { font-size: 3rem; margin-bottom: 10px; background: linear-gradient(to right, #00c6ff, #0072ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .tagline { font-size: 1.2rem; margin-bottom: 30px; opacity: 0.8; }
-
-    /* --- Sections --- */
-    .section-title {
-      font-size: 1.8rem;
-      margin: 40px 0 20px;
-      display: flex;
+    /* Buttons */
+    .btn-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 30px; }
+    .btn-main {
+      padding: 12px 30px;
+      border-radius: 12px;
+      text-decoration: none;
+      color: #fff;
+      font-weight: 600;
+      transition: 0.3s;
+      display: inline-flex;
       align-items: center;
       gap: 10px;
-      color: #00c6ff;
     }
+    .yt-btn { background: #ff0000; box-shadow: 0 5px 15px rgba(255,0,0,0.3); }
+    .web-btn { background: var(--secondary); box-shadow: 0 5px 15px rgba(0,114,255,0.3); }
+    .tg-btn { background: #0088cc; }
+    .btn-main:hover { transform: translateY(-5px); filter: brightness(1.2); }
 
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 15px;
-      margin-top: 20px;
-    }
-    .skill-tag {
-      background: rgba(255,255,255,0.1);
-      padding: 10px;
-      border-radius: 12px;
-      font-size: 0.9rem;
-      border: 1px solid rgba(255,255,255,0.05);
-    }
+    /* Skill Grid */
+    .skills-section { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+    .skill-box { background: rgba(0,0,0,0.2); padding: 20px; border-radius: 20px; border-left: 4px solid var(--primary); }
+    .skill-box h4 { color: var(--primary); margin-bottom: 5px; }
 
-    /* --- Social Media Links --- */
-    .social-links {
-      display: flex;
-      justify-content: center;
-      gap: 25px;
-      margin-top: 30px;
-    }
-    .social-links a {
-      color: #fff;
-      font-size: 2rem;
-      transition: 0.3s;
-    }
-    .social-links a:hover { color: #00c6ff; transform: translateY(-5px); }
+    /* Footer */
+    footer { text-align: center; margin-top: 50px; opacity: 0.6; padding-bottom: 30px; }
 
-    /* Responsive */
-    @media (max-width: 600px) {
-      h1 { font-size: 2.2rem; }
-      .glass-card { padding: 30px 20px; }
+    @media (max-width: 768px) {
+      h1 { font-size: 2.5rem; }
+      .glass-card { padding: 30px 15px; }
     }
   </style>
 </head>
@@ -153,77 +147,85 @@
   </video>
   <div class="overlay"></div>
 
-  <audio id="portfolio-music" loop>
+  <audio id="bgMusic" loop>
     <source src="https://github.com/DPModsYT/DPMods/raw/refs/heads/main/hacker.mp3" type="audio/mpeg">
   </audio>
 
   <div id="intro-screen">
-    <button class="dive-btn" onclick="startExperience()">Dive into Portfolio</button>
+    <button class="dive-btn" onclick="launchSite()">Dive into Portfolio</button>
   </div>
 
   <div class="container" id="main-content">
     
-    <div class="glass-card">
+    <div class="glass-card hero">
       <img src="images/file.png" alt="DPMods" class="profile-img">
-      <h1>DPMods</h1>
-      <p class="tagline">Developer | Graphic Editor | YouTuber</p>
+      <h1>DP<span class="accent">Mods</span></h1>
+      <p style="font-size: 1.1rem; opacity: 0.9;">Professional Android Developer | Graphic & Video Editor</p>
       
-      <div class="social-links">
-        <a href="https://t.me/dp_mods" target="_blank"><i class="fab fa-telegram"></i></a>
-        <a href="https://www.youtube.com/@dpmods" target="_blank"><i class="fab fa-youtube"></i></a>
-        <a href="https://www.instagram.com/jpeg_mood" target="_blank"><i class="fab fa-instagram"></i></a>
-        <a href="https://github.com/DPModsYT" target="_blank"><i class="fab fa-github"></i></a>
+      <div class="btn-group">
+        <a href="https://www.youtube.com/@dpmods" target="_blank" class="btn-main yt-btn">
+          <i class="fab fa-youtube"></i> YouTube (100+ Videos)
+        </a>
+        <a href="https://dpmods.com" target="_blank" class="btn-main web-btn">
+          <i class="fas fa-globe"></i> dpmods.com
+        </a>
+        <a href="https://t.me/dp_mods" target="_blank" class="btn-main tg-btn">
+          <i class="fab fa-telegram"></i> Telegram Channel
+        </a>
       </div>
     </div>
 
-    <div class="glass-card" style="text-align: left;">
-      <h2 class="section-title"><i class="fas fa-user"></i> About Me</h2>
-      <p style="line-height: 1.8; opacity: 0.9;">
-        I am a 22-year-old developer and editor from India. I specialize in Android development, specifically creating mods and tools for games like GTA San Andreas. My work blends technical coding with creative design, focusing on delivering high-quality user experiences.
+    <div class="glass-card">
+      <h2 style="margin-bottom: 25px;"><i class="fas fa-info-circle accent"></i> About Me</h2>
+      <p style="line-height: 1.8; margin-bottom: 30px;">
+        I am <strong>DPMods</strong>, a specialized developer from India with a passion for gaming modding and technical tools. With deep expertise in Android development, I've created unique tools like a virtual joystick for Godot and managed a YouTube channel with over 100 video uploads. 
       </p>
 
-      <h2 class="section-title"><i class="fas fa-code"></i> Technical Skills</h2>
-      <div class="skills-grid">
-        <div class="skill-tag">HTML & CSS (98%)</div>
-        <div class="skill-tag">UI/UX Design (100%)</div>
-        <div class="skill-tag">XML (90%)</div>
-        <div class="skill-tag">Python (70%)</div>
-        <div class="skill-tag">Java (70%)</div>
-        <div class="skill-tag">JavaScript (60%)</div>
+      <div class="skills-section">
+        <div class="skill-box">
+          <h4>Programming</h4>
+          <p>Java (70%), Kotlin (30%), Python (70%), JS (60%)</p>
+        </div>
+        <div class="skill-box">
+          <h4>Web Development</h4>
+          <p>HTML & CSS (98%), XML (90%), UI/UX Design (100%)</p>
+        </div>
+        <div class="skill-box">
+          <h4>Creative Media</h4>
+          <p>Graphic Design, Video Editing, Indian Artform Doodles</p>
+        </div>
       </div>
     </div>
 
-    <div class="glass-card" style="text-align: left;">
-      <h2 class="section-title"><i class="fas fa-project-diagram"></i> Latest Projects</h2>
-      <ul style="list-style: none; line-height: 2;">
-        <li>🚀 <strong>DPMods Bot:</strong> Telegram automation tool.</li>
-        <li>🎮 <strong>Unity 3D Horror:</strong> A delivery-driver story game.</li>
-        <li>📱 <strong>Virtual Joystick:</strong> Custom script for Godot engine.</li>
-        <li>📸 <strong>Village Life Series:</strong> Nostalgic photography project.</li>
+    <div class="glass-card">
+      <h2 style="margin-bottom: 25px;"><i class="fas fa-rocket accent"></i> Latest Work</h2>
+      <ul style="list-style: none; line-height: 2.2;">
+        <li><i class="fas fa-check accent"></i> Developing <strong>DPMods Discussion</strong> Community</li>
+        <li><i class="fas fa-check accent"></i> <strong>GTA San Andreas</strong> Modding & Android Tools</li>
+        <li><i class="fas fa-check accent"></i> <strong>Unity 3D Horror Game</strong> Project (Story Center)</li>
+        <li><i class="fas fa-check accent"></i> <strong>Village Life</strong> Photography Series (@jpeg_mood)</li>
       </ul>
     </div>
 
-    <footer style="text-align: center; padding-bottom: 40px; opacity: 0.5; font-size: 0.8rem;">
-      © 2026 DPMods. Built with Passion in India.
+    <footer>
+      <p>© 2026 DPMods | Designed for Global Tech & Creative Community</p>
     </footer>
   </div>
 
   <script>
-    const music = document.getElementById('portfolio-music');
+    const music = document.getElementById('bgMusic');
     const intro = document.getElementById('intro-screen');
     const content = document.getElementById('main-content');
 
-    function startExperience() {
-      // Start Music
-      music.volume = 0.6;
-      music.play().catch(err => console.log("Audio play blocked by browser."));
+    function launchSite() {
+      // Audio trigger
+      music.volume = 0.5;
+      music.play().catch(e => console.log("Audio play blocked."));
 
-      // Transition Page
+      // UI Transition
       intro.classList.add('hidden');
       content.classList.add('active');
-      
-      // Enable scrolling
-      document.body.style.overflow = 'auto';
+      document.body.style.overflow = "auto";
     }
   </script>
 </body>
