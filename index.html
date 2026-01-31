@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>DPMods | Neon Portfolio</title>
+  <title>DPMods | Professional Portfolio</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
     :root {
       --neon-purple: #bc13fe;
-      --deep-purple: #1a0033;
-      --glass: rgba(188, 19, 254, 0.05);
-      --border: rgba(188, 19, 254, 0.3);
+      --glass: rgba(188, 19, 254, 0.08);
+      --border: rgba(188, 19, 254, 0.4);
+      --glow: 0 0 15px rgba(188, 19, 254, 0.5);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -20,12 +20,11 @@
       height: 100%; 
       font-family: 'Poppins', sans-serif; 
       color: #fff; 
-      overflow-x: hidden; 
       background: #000;
       scroll-behavior: smooth;
     }
 
-    /* Background Video */
+    /* Full Background Video */
     video#bg-video {
       position: fixed;
       top: 0; left: 0;
@@ -37,7 +36,7 @@
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: linear-gradient(135deg, rgba(0,0,0,0.8) 0%, rgba(26,0,51,0.7) 100%);
+      background: radial-gradient(circle, rgba(0,0,0,0.4) 0%, rgba(10,0,20,0.9) 100%);
       z-index: -1;
     }
 
@@ -51,15 +50,15 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background: #050505;
-      transition: transform 1.2s cubic-bezier(0.7, 0, 0.3, 1);
+      background: #000;
+      transition: transform 1.2s cubic-bezier(0.8, 0, 0.2, 1);
     }
     #intro-screen.hidden { transform: translateY(-100%); }
 
-    /* Small Responsive Button */
+    /* Small Mobile-Optimized Button */
     .dive-btn {
-      padding: 12px 30px;
-      font-size: 1rem;
+      padding: 10px 25px;
+      font-size: 0.9rem;
       font-weight: 600;
       color: #fff;
       background: transparent;
@@ -69,65 +68,67 @@
       text-transform: uppercase;
       letter-spacing: 2px;
       transition: 0.4s;
-      box-shadow: 0 0 15px var(--neon-purple);
+      box-shadow: var(--glow);
     }
-    .dive-btn:hover { 
-      background: var(--neon-purple); 
-      box-shadow: 0 0 30px var(--neon-purple);
-      transform: scale(1.05);
-    }
+    .dive-btn:hover { background: var(--neon-purple); box-shadow: 0 0 30px var(--neon-purple); }
 
-    /* Portfolio Container */
+    /* Content Layout */
     .container {
       max-width: 900px;
       margin: 0 auto;
       padding: 40px 20px;
       opacity: 0;
-      transform: translateY(30px);
-      transition: 1s ease;
+      transform: translateY(50px);
+      transition: 1.5s ease;
     }
     .container.active { opacity: 1; transform: translateY(0); }
 
-    /* Glass UI Cards */
     .glass-card {
       background: var(--glass);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
       border: 1px solid var(--border);
-      border-radius: 24px;
-      padding: 30px;
-      margin-bottom: 25px;
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      border-radius: 25px;
+      padding: 40px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
     }
 
-    h1 { font-size: 2.8rem; margin-bottom: 10px; text-shadow: 0 0 10px var(--neon-purple); }
-    .purple-text { color: var(--neon-purple); }
+    /* Logo & Branding */
+    .logo-container { text-align: center; margin-bottom: 20px; }
+    .dp-logo {
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      border: 3px solid var(--neon-purple);
+      padding: 5px;
+      object-fit: cover;
+      filter: drop-shadow(var(--glow));
+    }
+    h1 { font-size: 3rem; margin-bottom: 10px; text-shadow: var(--glow); }
 
-    /* Buttons */
-    .btn-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 20px; }
-    .btn-main {
+    /* Info Sections */
+    .section-title { color: var(--neon-purple); margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+    .skill-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; }
+    .skill-item { background: rgba(0,0,0,0.4); padding: 15px; border-radius: 15px; border: 1px solid rgba(188, 19, 254, 0.2); text-align: center; }
+
+    /* Links */
+    .link-group { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 25px; }
+    .p-link {
       padding: 10px 20px;
-      border-radius: 12px;
+      border-radius: 50px;
       text-decoration: none;
       color: #fff;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 600;
       background: rgba(255,255,255,0.05);
       border: 1px solid var(--border);
       transition: 0.3s;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
     }
-    .btn-main:hover { background: var(--neon-purple); border-color: #fff; }
-
-    /* Technical Skill Grid */
-    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
-    .skill { background: rgba(0,0,0,0.3); padding: 12px; border-radius: 12px; text-align: center; font-size: 0.85rem; border: 1px solid rgba(188, 19, 254, 0.1); }
+    .p-link:hover { background: var(--neon-purple); transform: translateY(-3px); }
 
     @media (max-width: 480px) {
-      .dive-btn { padding: 10px 24px; font-size: 0.9rem; }
-      h1 { font-size: 2rem; }
+      h1 { font-size: 2.2rem; }
+      .glass-card { padding: 25px; }
     }
   </style>
 </head>
@@ -138,57 +139,66 @@
   </video>
   <div class="overlay"></div>
 
-  <audio id="hackerMusic" loop>
+  <audio id="hackerAudio" loop>
     <source src="https://github.com/DPModsYT/DPMods/raw/refs/heads/main/hacker.mp3" type="audio/mpeg">
   </audio>
 
   <div id="intro-screen">
-    <button class="dive-btn" onclick="startPortfolio()">Dive into Portfolio</button>
+    <button class="dive-btn" onclick="initPortfolio()">Dive into Portfolio</button>
   </div>
 
   <div class="container" id="main-content">
     
-    <div class="glass-card" style="text-align: center;">
-      <h1>DP<span class="purple-text">Mods</span></h1>
-      <p style="opacity: 0.8; margin-bottom: 20px;">Android Modder | Web Developer | Graphic Artist</p>
+    <div class="glass-card logo-container">
+      <img src="images/file.png" alt="DP Logo" class="dp-logo">
+      <h1>DP<span style="color: var(--neon-purple);">Mods</span></h1>
+      <p style="opacity: 0.8;">Full-Stack Developer & Creative Graphic Artist</p>
       
-      <div class="btn-group">
-        <a href="https://dpmods.com" target="_blank" class="btn-main"><i class="fas fa-globe"></i> dpmods.com</a>
-        <a href="https://www.youtube.com/@dpmods" target="_blank" class="btn-main"><i class="fab fa-youtube"></i> YouTube</a>
-        <a href="https://t.me/dp_mods" target="_blank" class="btn-main"><i class="fab fa-telegram"></i> Telegram</a>
+      <div class="link-group">
+        <a href="https://dpmods.com" class="p-link" target="_blank"><i class="fas fa-globe"></i> Website</a>
+        <a href="https://www.youtube.com/@dpmods" class="p-link" target="_blank"><i class="fab fa-youtube"></i> YouTube</a>
+        <a href="https://t.me/dp_mods" class="p-link" target="_blank"><i class="fab fa-telegram"></i> Telegram</a>
+        <a href="https://www.instagram.com/jpeg_mood" class="p-link" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
       </div>
     </div>
 
     <div class="glass-card">
-      <h2 style="margin-bottom: 20px; font-size: 1.4rem;"><i class="fas fa-terminal purple-text"></i> Technical Expertise</h2>
-      <div class="skills-grid">
-        <div class="skill">UI/UX (100%)</div>
-        <div class="skill">HTML/CSS (98%)</div>
-        <div class="skill">XML (90%)</div>
-        <div class="skill">Java (70%)</div>
-        <div class="skill">Python (70%)</div>
-        <div class="skill">JS (60%)</div>
+      <h2 class="section-title"><i class="fas fa-user-astronaut"></i> Biography</h2>
+      <p style="line-height: 1.8; opacity: 0.9;">
+        I am a 22-year-old developer from Madhya Pradesh, India, widely known as <strong>DPMods</strong>. I specialize in creating modified games and applications, sharing my technical insights with a growing community. With a deep passion for Android development, I focus on game modding, specifically for <strong>GTA San Andreas</strong>.
+      </p>
+    </div>
+
+    <div class="glass-card">
+      <h2 class="section-title"><i class="fas fa-microchip"></i> Expertise & Skills</h2>
+      <div class="skill-grid">
+        <div class="skill-item">UI/UX Design (100%)</div>
+        <div class="skill-item">HTML/CSS (98%)</div>
+        <div class="skill-item">XML (90%)</div>
+        <div class="skill-item">Python (70%)</div>
+        <div class="skill-item">Java (70%)</div>
+        <div class="skill-item">JS (60%)</div>
       </div>
     </div>
 
     <div class="glass-card">
-      <h2 style="margin-bottom: 20px; font-size: 1.4rem;"><i class="fas fa-code-branch purple-text"></i> Ongoing Projects</h2>
-      <ul style="list-style: none; line-height: 2;">
-        <li>⚡ <strong>GTA San Andreas</strong> Android Modding Tools</li>
-        <li>🕹️ <strong>Godot</strong> Virtual Joystick Development</li>
-        <li>👻 <strong>Unity 3D</strong> Story-Based Horror Game</li>
-        <li>🎨 <strong>Indian Artform</strong> Doodles & Photography</li>
+      <h2 class="section-title"><i class="fas fa-layer-group"></i> Active Projects</h2>
+      <ul style="list-style: none; line-height: 2.2;">
+        <li>🚀 <strong>DPMods YouTube:</strong> Reached over 100 video uploads.</li>
+        <li>🕹️ <strong>Godot Engine:</strong> Developing a custom virtual joystick.</li>
+        <li>🏚️ <strong>Unity 3D Horror:</strong> Developing a delivery-driver story game.</li>
+        <li>🎨 <strong>Village Life:</strong> A photography series on rustic Indian scenes.</li>
       </ul>
     </div>
 
-    <footer style="text-align: center; opacity: 0.4; font-size: 0.75rem; padding-bottom: 20px;">
-      © 2026 DPMods | All Rights Reserved
+    <footer style="text-align: center; opacity: 0.5; padding-bottom: 40px; font-size: 0.8rem;">
+      © 2026 DPMods | Portfolio developed for Excellence.
     </footer>
   </div>
 
   <script>
-    function startPortfolio() {
-      const music = document.getElementById('hackerMusic');
+    function initPortfolio() {
+      const music = document.getElementById('hackerAudio');
       music.volume = 0.5;
       music.play();
 
