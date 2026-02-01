@@ -11,8 +11,8 @@
     /* --- VARIABLES --- */
     :root {
       --neon-purple: #bc13fe;
-      --glass-bg: rgba(10, 0, 20, 0.55); /* More transparent for video visibility */
-      --glass-border: rgba(188, 19, 254, 0.5);
+      --glass-bg: rgba(15, 0, 30, 0.6); /* Slightly transparent to see video */
+      --glass-border: rgba(188, 19, 254, 0.4);
       --glow: 0 0 18px rgba(188, 19, 254, 0.6);
       --cyan-accent: #00e5ff;
     }
@@ -25,20 +25,28 @@
       width: 100%;
       font-family: 'Poppins', sans-serif; 
       color: #fff; 
-      background: #000; /* Fallback */
+      /* CRITICAL FIX: Background must be transparent for video to show */
+      background: transparent; 
       overflow-x: hidden;
       scroll-behavior: smooth;
     }
 
     /* --- FIXED BACKGROUND VIDEO --- */
-    /* Z-Index -10 ensures it stays behind everything */
     video#bg-video {
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      object-fit: cover;
-      z-index: -10;
-      filter: brightness(0.6); /* Improves text readability */
+      object-fit: cover; /* Ensures full screen coverage */
+      z-index: -100; /* Puts video behind everything */
+      filter: brightness(0.5); /* Dims video so text is readable */
+    }
+
+    /* Fallback background color (behind video) */
+    .bg-fallback {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: #000;
+      z-index: -101;
     }
 
     /* --- INTRO SCREEN --- */
@@ -56,7 +64,7 @@
     #intro-screen.hidden { transform: translateY(-100%); }
 
     .dive-btn {
-      padding: 15px 45px;
+      padding: 15px 40px;
       font-size: 1rem;
       font-weight: 600;
       border: 2px solid var(--neon-purple);
@@ -71,73 +79,13 @@
     }
     .dive-btn:hover { background: var(--neon-purple); box-shadow: 0 0 50px var(--neon-purple); }
 
-    /* --- FIXED BOTTOM PROJECT TICKER --- */
-    .bottom-ticker-bar {
-      position: fixed;
-      bottom: 0; left: 0;
-      width: 100%;
-      height: 60px;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(15px);
-      border-top: 2px solid var(--neon-purple);
-      z-index: 5000;
-      display: flex;
-      align-items: center;
-      box-shadow: 0 -10px 30px rgba(188, 19, 254, 0.2);
-    }
-
-    .ticker-label {
-      background: var(--neon-purple);
-      color: #fff;
-      padding: 0 20px;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      font-weight: 700;
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      white-space: nowrap;
-      z-index: 5002;
-      box-shadow: 5px 0 15px rgba(0,0,0,0.5);
-    }
-
-    .ticker-wrapper {
-      flex-grow: 1;
-      overflow: hidden;
-      position: relative;
-      height: 100%;
-      display: flex;
-      align-items: center;
-    }
-
-    .ticker-move {
-      display: inline-block;
-      white-space: nowrap;
-      animation: ticker 25s linear infinite;
-      padding-left: 100%; /* Start off-screen */
-    }
-
-    .ticker-item {
-      display: inline-block;
-      padding: 0 40px;
-      font-size: 0.95rem;
-      color: #e0e0e0;
-    }
-    .ticker-item strong { color: var(--cyan-accent); }
-
-    @keyframes ticker {
-      0% { transform: translate3d(0, 0, 0); }
-      100% { transform: translate3d(-100%, 0, 0); }
-    }
-
-    /* --- MAIN CONTENT CONTAINER --- */
+    /* --- MAIN CONTAINER --- */
     .container {
       position: relative;
       z-index: 1;
       max-width: 850px;
       margin: 0 auto;
-      /* Padding bottom ensures content isn't hidden behind the ticker */
-      padding: 40px 20px 100px 20px; 
+      padding: 40px 20px;
       opacity: 0;
       transform: translateY(40px);
       transition: 1s ease;
@@ -151,15 +99,16 @@
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--glass-border);
       border-radius: 24px;
-      padding: 35px;
+      padding: 30px;
       margin-bottom: 25px;
       box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+      overflow: hidden; /* Keeps content inside rounded corners */
     }
 
-    /* --- PROFILE HEADER --- */
+    /* --- PROFILE SECTION --- */
     .profile-header { text-align: center; }
     .dp-logo {
-      width: 140px; height: 140px;
+      width: 130px; height: 130px;
       border-radius: 50%;
       border: 4px solid var(--neon-purple);
       padding: 5px;
@@ -168,27 +117,8 @@
       filter: drop-shadow(var(--glow));
       background: rgba(0,0,0,0.3);
     }
-    h1 { font-size: 3rem; text-shadow: var(--glow); margin-bottom: 8px; }
+    h1 { font-size: 2.8rem; text-shadow: var(--glow); margin-bottom: 8px; }
     .accent { color: var(--neon-purple); }
-
-    /* --- SECTIONS --- */
-    .section-title { 
-      color: var(--neon-purple); 
-      margin-bottom: 20px; 
-      font-size: 1.5rem; 
-      display: flex; align-items: center; gap: 10px; 
-    }
-
-    .skill-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
-    .skill-item { 
-      background: rgba(255,255,255,0.05); 
-      padding: 15px; 
-      border-radius: 15px; 
-      border: 1px solid rgba(188, 19, 254, 0.3);
-      text-align: center;
-      transition: 0.3s;
-    }
-    .skill-item:hover { border-color: var(--neon-purple); background: rgba(188, 19, 254, 0.15); }
 
     /* --- SOCIAL LINKS --- */
     .social-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 25px; }
@@ -204,48 +134,79 @@
     }
     .btn-link:hover { background: var(--neon-purple); transform: translateY(-3px); box-shadow: var(--glow); }
 
+    /* --- SECTIONS --- */
+    .section-title { 
+      color: var(--neon-purple); 
+      margin-bottom: 20px; 
+      font-size: 1.4rem; 
+      display: flex; align-items: center; gap: 10px; 
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .skill-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .skill-item { 
+      background: rgba(255,255,255,0.05); 
+      padding: 12px; 
+      border-radius: 12px; 
+      border: 1px solid rgba(188, 19, 254, 0.3);
+      text-align: center;
+    }
+
+    /* --- UPCOMING PROJECTS TICKER (Last Section) --- */
+    .ticker-wrapper {
+      width: 100%;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 12px;
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 15px 0;
+      position: relative;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .ticker-move {
+      display: inline-block;
+      white-space: nowrap;
+      animation: ticker 25s linear infinite;
+    }
+
+    .ticker-item {
+      display: inline-block;
+      padding: 0 30px;
+      font-size: 0.95rem;
+      color: #ddd;
+    }
+    .ticker-item strong { color: var(--cyan-accent); }
+
+    @keyframes ticker {
+      0% { transform: translate3d(0, 0, 0); }
+      100% { transform: translate3d(-50%, 0, 0); }
+    }
+
     /* --- MOBILE OPTIMIZATION --- */
     @media (max-width: 600px) {
-      h1 { font-size: 2.4rem; }
-      .dp-logo { width: 120px; height: 120px; }
+      h1 { font-size: 2.2rem; }
+      .dp-logo { width: 110px; height: 110px; }
       .glass-card { padding: 25px 20px; }
-      .ticker-label span { display: none; } /* Hide icon text on very small screens */
-      .ticker-label { padding: 0 15px; }
-      .ticker-label::after { content: "NEWS"; } /* Shorter text for mobile */
-      .dive-btn { width: 80%; }
-    }
-    @media (min-width: 601px) {
-       .ticker-label::after { content: "UPCOMING PROJECTS"; }
+      .section-title { font-size: 1.2rem; }
     }
   </style>
 </head>
 <body>
+
+  <div class="bg-fallback"></div>
 
   <video autoplay muted loop playsinline id="bg-video">
     <source src="media/bg.mp4" type="video/mp4">
   </video>
 
   <audio id="hackerAudio" loop>
-    <source src="media/hacker.mp3" type="audio/mpeg">
+    <source src="https://github.com/DPModsYT/DPMods/raw/refs/heads/main/hacker.mp3" type="audio/mpeg">
   </audio>
 
   <div id="intro-screen">
     <button class="dive-btn" onclick="startPortfolio()">Dive into Portfolio</button>
-  </div>
-
-  <div class="bottom-ticker-bar">
-    <div class="ticker-label"><i class="fas fa-bolt" style="margin-right:8px;"></i></div>
-    <div class="ticker-wrapper">
-      <div class="ticker-move">
-        <span class="ticker-item">🔥 <strong>GTA SA Graphic ModPack V2:</strong> High Quality Textures</span>
-        <span class="ticker-item">📥 <strong>New Update:</strong> Dialog Direct Download Features Added</span>
-        <span class="ticker-item">🕹️ <strong>Godot Engine:</strong> Custom Virtual Joystick Script</span>
-        <span class="ticker-item">👻 <strong>Unity 3D:</strong> Delivery-Driver Horror Game</span>
-        <span class="ticker-item">🛠️ <strong>Android:</strong> Modding Tools Update</span>
-        <span class="ticker-item">🔥 <strong>GTA SA Graphic ModPack V2:</strong> High Quality Textures</span>
-        <span class="ticker-item">📥 <strong>New Update:</strong> Dialog Direct Download Features Added</span>
-      </div>
-    </div>
   </div>
 
   <div class="container" id="main-content">
@@ -253,7 +214,7 @@
     <div class="glass-card profile-header">
       <img src="images/file.png" alt="DPMods" class="dp-logo">
       <h1>DP<span class="accent">Mods</span></h1>
-      <p style="opacity: 0.9; font-size: 1.1rem;">Indian YouTuber & Professional Developer</p>
+      <p style="opacity: 0.9; font-size: 1.05rem;">Indian YouTuber & Professional Developer</p>
       
       <div class="social-links">
         <a href="https://dpmods.com" class="btn-link" target="_blank"><i class="fas fa-globe"></i> Website</a>
@@ -267,7 +228,7 @@
       <p style="line-height: 1.8; opacity: 0.9;">
         <strong>DPMods</strong> is a leading technical channel from Madhya Pradesh, India. I specialize in deep-dives into modified games & apps, bridging the gap between coding and gaming.
       </p>
-      <div style="margin-top: 15px; padding: 15px; border-left: 3px solid var(--neon-purple); background: rgba(255,255,255,0.05); border-radius: 8px;">
+      <div style="margin-top: 15px; padding: 12px; background: rgba(188, 19, 254, 0.15); border-radius: 10px; border-left: 3px solid var(--neon-purple);">
         <strong>Milestone:</strong> 100+ High-Quality Video Uploads 🚀
       </div>
     </div>
@@ -289,6 +250,26 @@
       <p style="line-height: 1.8; opacity: 0.9;">
         I am a 22-year-old developer passionate about Android architecture. My work ranges from creating automation tools for Telegram to building custom scripts for game engines like Godot and Unity.
       </p>
+    </div>
+
+    <div class="glass-card">
+      <h2 class="section-title"><i class="fas fa-bolt" style="color: #ffd700;"></i> Upcoming Projects</h2>
+      
+      <div class="ticker-wrapper">
+        <div class="ticker-move">
+          <span class="ticker-item">🔥 <strong>GTA SA Graphic ModPack V2:</strong> High Quality Textures</span>
+          <span class="ticker-item">📥 <strong>New Update:</strong> Dialog Direct Download Added</span>
+          <span class="ticker-item">🕹️ <strong>Godot Engine:</strong> Custom Virtual Joystick</span>
+          <span class="ticker-item">👻 <strong>Unity 3D:</strong> Delivery-Driver Horror Game</span>
+          <span class="ticker-item">🛠️ <strong>Android:</strong> Modding Tools Update</span>
+          
+          <span class="ticker-item">🔥 <strong>GTA SA Graphic ModPack V2:</strong> High Quality Textures</span>
+          <span class="ticker-item">📥 <strong>New Update:</strong> Dialog Direct Download Added</span>
+          <span class="ticker-item">🕹️ <strong>Godot Engine:</strong> Custom Virtual Joystick</span>
+          <span class="ticker-item">👻 <strong>Unity 3D:</strong> Delivery-Driver Horror Game</span>
+          <span class="ticker-item">🛠️ <strong>Android:</strong> Modding Tools Update</span>
+        </div>
+      </div>
     </div>
 
     <footer style="text-align: center; opacity: 0.6; font-size: 0.8rem; padding-bottom: 20px;">
